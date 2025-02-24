@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Homepage</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #2c3e50;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .navbar a:hover {
+            color: #f1c40f;
+        }
+
+        #main-heading {
+            font-size: 50px;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-top: 40px;
+            color: #34495e;
+        }
+
+        .specialties {
+            margin: 40px auto;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .specialties ul, .specialties ol {
+            text-align: left;
+            padding: 0 20px;
+        }
+        button {
+            background-color: #e74c3c; 
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .menu-table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .menu-table th, .menu-table td {
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+        .menu-table th {
+            background-color: #e67e22;
+            color: white;
+            font-size: 18px;
+        }
+        .menu-table tr:hover {
+            background-color: lightyellow;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .footer-content p {
+            margin: 5px 0;
+        }
+        .social-icons {
+            margin-top: 10px;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .social-icons a:hover {
+            color: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact Us</a>
+    </div>
+
+    <h1 id="main-heading">Welcome to Our Restaurant</h1>
+
+    <div class="specialties">
+        <h2>Restaurant Specialties</h2>
+        <ul>
+            <li>Italian</li>
+            <li>Indian</li>
+            <li>Chinese</li>
+            <li>Mexican</li>
+            <li>Japanese</li>
+        </ul>
+        <h3>Ordered List of Specialties</h3>
+        <ol>
+            <li>Italian</li>
+            <li>Indian</li>
+            <li>Chinese</li>
+            <li>Mexican</li>
+            <li>Japanese</li>
+        </ol>
+    </div>
+
+    <h2 id="menu">Our Menu</h2>
+    <table class="menu-table" id="main-menu">
+        <tr>
+            <th>Dish Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>Margherita Pizza</td>
+            <td>100/-</td>
+            <td>Classic Italian pizza with fresh basil and mozzarella.</td>
+            <td>
+                <button onclick="add(this)">Add</button>
+                <button onclick="remove(this)">Remove</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Butter Chicken</td>
+            <td>120/-</td>
+            <td>Rich and creamy tomato-based Indian curry.</td>
+            <td>
+                <button onclick="add(this)">Add</button>
+                <button onclick="remove(this)">Remove</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Sushi Platter</td>
+            <td>280/-</td>
+            <td>Assorted Japanese sushi rolls with fresh seafood.</td>
+            <td>
+                <button onclick="add(this)">Add</button>
+                <button onclick="remove(this)">Remove</button>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Selected Items</h2>
+    <table class="menu-table" id="selected-menu">
+        <tr>
+            <th>Dish Name</th>
+            <th>Price</th>
+            <th>Description</th>
+        </tr>
+    </table>
+
+    <script>
+        function add(button) {
+            let row = button.parentNode.parentNode;
+            let table = document.getElementById("selected-menu");
+            let dishName = row.cells[0].textContent;
+            let existingRows = table.rows;
+            for (let i = 1; i < existingRows.length; i++) {
+                if (existingRows[i].cells[0].textContent === dishName) {
+                    return;
+                }
+            }
+
+            let newRow = table.insertRow();
+            for (let i = 0; i < row.cells.length - 1; i++) {
+                let newCell = newRow.insertCell(i);
+                newCell.innerHTML = row.cells[i].innerHTML;
+            }
+        }
+
+        function remove(button) {
+            let row = button.parentNode.parentNode;
+            let table = document.getElementById("selected-menu");
+
+            let dishName = row.cells[0].textContent;
+            let selectedRows = table.rows;
+
+            for (let i = 1; i < selectedRows.length; i++) {
+                if (selectedRows[i].cells[0].textContent === dishName) {
+                    table.deleteRow(i);
+                    break;
+                }
+            }
+        }
+    </script>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Our Restaurant. All rights reserved.</p>
+            <p>123 Food Street, Hyderabad | Phone: +9293268874 | Email: contact@restaurant.com</p>
+        </div>
+    </footer>
+</body>
+</html>
